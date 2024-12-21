@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botpress Webchat Integration</title>
+    <link rel="icon" href="logo2.png">
+    <style>
+        /* Reset default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('bg.png') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Logo styling */
+        .logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px; /* Adjust logo size */
+            height: auto;
+        }
+
+        /* Webchat container styling */
+        .webchat {
+            width: 100%;
+            max-width: 420px;
+            height: 80vh;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 0 20px 5px rgba(59, 130, 246, 0.6), 0 0 40px 10px rgba(59, 130, 246, 0.4);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            animation: glow-pulse 2s infinite;
+        }
+
+        /* Glow pulse animation */
+        @keyframes glow-pulse {
+            0% {
+                box-shadow: 0 0 20px 5px rgba(59, 130, 246, 0.6), 0 0 40px 10px rgba(59, 130, 246, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 30px 8px rgba(59, 130, 246, 0.8), 0 0 50px 15px rgba(59, 130, 246, 0.6);
+            }
+
+            100% {
+                box-shadow: 0 0 20px 5px rgba(59, 130, 246, 0.6), 0 0 40px 10px rgba(59, 130, 246, 0.4);
+            }
+        }
+
+        /* Webchat iframe styling */
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Optional button to open chat - hidden by default */
+        .open-chat-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            background-color: #3B82F6;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .open-chat-btn:hover {
+            background-color: #2563EB;
+        }
+
+        .open-chat-btn:focus {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Logo on top right corner -->
+    <img src="logo2.png" alt="Logo" class="logo">
+
+    <!-- Webchat Container -->
+    <div class="webchat">
+        <iframe id="botpress-webchat" srcdoc='
+        <!doctype html>
+        <html lang="en">
+            <head></head>
+            <body>
+                <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+                <script defer>
+                    window.botpress.on("webchat:ready", (conversationId) => {
+                        botpress.open();  // Automatically open the chat
+                    });
+
+                    window.botpress.init({
+                        "botId": "839a14ab-6663-41af-98ba-af4c91128edd",  // Replace with your Bot ID
+                        "configuration": {
+                            "color": "#3B82F6",
+                            "variant": "solid",
+                            "themeMode": "light",
+                            "fontFamily": "inter",
+                            "radius": 4
+                        },
+                        "clientId": "5ea88147-f01c-47c5-b6f8-43dd26a3b994"  // Replace with your Client ID
+                    });
+                </script>
+            </body>
+        </html>'
+        onerror="handleIframeError()"></iframe>
+    </div>
+
+    <!-- Optional Button to open chat -->
+    <!-- <button class="open-chat-btn" onclick="openChat()">Open Chat</button> -->
+
+    <script>
+        // Error handler for iframe loading
+        function handleIframeError() {
+            console.error("Error loading the Webchat iframe. Please check your Bot ID and Client ID.");
+        }
+
+        // Function to open the chat when the button is clicked
+        function openChat() {
+            const iframe = document.getElementById('botpress-webchat');
+            iframe.contentWindow.postMessage({ type: 'open' }, '*');
+        }
+    </script>
+</body>
+
+</html>
