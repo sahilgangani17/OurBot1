@@ -27,13 +27,25 @@
             position: relative;
         }
 
-        /* Logo styling */
+        /* Logo styling with glow effect */
         .logo {
             position: absolute;
             top: 20px;
             right: 20px;
             width: 50px; /* Adjust logo size */
             height: auto;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        /* Glow effect animation */
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px rgba(59, 130, 246, 0.8), 0 0 20px rgba(59, 130, 246, 0.6);
+            }
+
+            100% {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 1), 0 0 30px rgba(59, 130, 246, 0.8);
+            }
         }
 
         /* Webchat container styling */
@@ -52,7 +64,7 @@
             animation: glow-pulse 2s infinite;
         }
 
-        /* Glow pulse animation */
+        /* Glow pulse animation for webchat */
         @keyframes glow-pulse {
             0% {
                 box-shadow: 0 0 20px 5px rgba(59, 130, 246, 0.6), 0 0 40px 10px rgba(59, 130, 246, 0.4);
@@ -103,7 +115,7 @@
 </head>
 
 <body>
-    <!-- Logo on top right corner -->
+    <!-- Logo on top right corner with glow effect -->
     <img src="logo2.png" alt="Logo" class="logo">
 
     <!-- Webchat Container -->
@@ -120,15 +132,15 @@
                     });
 
                     window.botpress.init({
-                        "botId": "839a14ab-6663-41af-98ba-af4c91128edd",  // Replace with your Bot ID
+                        "botId": "your-bot-id",  // Replace with your Bot ID
+                        "clientId": "your-client-id",  // Replace with your Client ID
                         "configuration": {
                             "color": "#3B82F6",
                             "variant": "solid",
                             "themeMode": "light",
                             "fontFamily": "inter",
                             "radius": 4
-                        },
-                        "clientId": "5ea88147-f01c-47c5-b6f8-43dd26a3b994"  // Replace with your Client ID
+                        }
                     });
                 </script>
             </body>
@@ -137,7 +149,7 @@
     </div>
 
     <!-- Optional Button to open chat -->
-    <button class="open-chat-btn" onclick="openChat()">Open Chat</button>
+<!--     <button class="open-chat-btn" onclick="openChat()">Open Chat</button> -->
 
     <script>
         // Error handler for iframe loading
